@@ -17,7 +17,7 @@ public class LoadTest {
         String url = "https://geo-reindexer.ids.k8s.mediascope.dev/geo/tips?api_key=e0f0b372f12a44bcbb2c269b701df39b&mode=1&n_tips=1000&region=11&query=В";
 
         TestPlanStats stats = testPlan(
-                threadGroup(100,1000,
+                threadGroup(100,100,
                         httpSampler(url)
                         .method("GET"))
         ).run();
@@ -33,7 +33,7 @@ public class LoadTest {
         String url = "https://geo-reindexer.ids.k8s.mediascope.dev/geo/tips-with-error?api_key=e0f0b372f12a44bcbb2c269b701df39b&mode=1&n_tips=1000&region=11&query=Сад";
 
         TestPlanStats stats = testPlan(
-                threadGroup(10,1000,
+                threadGroup(10,10,
                         httpSampler(url)
                                 .method("GET"))
         ).run();
@@ -49,7 +49,7 @@ public class LoadTest {
         String url = "https://tele.fm/tips_api/?api_key=e0f0b372f12a44bcbb2c269b701df39b&region=50&mode=1&n_tips=10&query=%D0%B3%D0%BE%D1%80%D0%BE%D0%B4";
 
         TestPlanStats stats = testPlan(
-                threadGroup(5,5,
+                threadGroup(100,100,
                         httpSampler(url)
                                 .method("GET"))
         ).run();
@@ -59,4 +59,26 @@ public class LoadTest {
         System.out.println("Number of requests: "+  stats.overall().samplesCount());
         System.out.println("Number of mistakes: "+  stats.overall().errors().total());
     }
+
+    @Test
+    public void testHttpPost() throws IOException {
+        String url = "https://reqres.in/api/login";
+
+        TestPlanStats stats = testPlan(
+                threadGroup(1,1,
+                        httpSampler(url)
+                                .method("POST")
+                                .body("{ \"email\": \"eve.holt@reqres.in\", \"password\": \"cityslicka\" }")
+                                .header("Content-Type","application/json")
+                )
+        ).run();
+
+        assertEquals(0, stats.overall().errors().total());
+
+        System.out.println("Number of requests: "+  stats.overall().samplesCount());
+        System.out.println("Number of mistakes: "+  stats.overall().errors().total());
+    }
+
+
+
 }
