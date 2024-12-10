@@ -81,8 +81,10 @@ public class LoadTest {
 
             System.out.println("Number of requests: " + stats.overall().samplesCount());
             System.out.println("Number of mistakes: " + stats.overall().errors().total());
+
             try {
             Assertions.assertEquals(0, stats.overall().errors().total());
+            
         } catch (AssertionError e) {
                 System.out.println("Error message: " + e.getMessage());
             }
