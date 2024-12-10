@@ -84,7 +84,7 @@ public class LoadTest {
 
             try {
             Assertions.assertEquals(0, stats.overall().errors().total());
-            
+
         } catch (AssertionError e) {
                 System.out.println("Error message: " + e.getMessage());
             }
