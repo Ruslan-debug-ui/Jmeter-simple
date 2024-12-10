@@ -72,7 +72,7 @@ public class LoadTest {
                     threadGroup(1, 1,
                             httpSampler(url)
                                     .method("POST")
-                                    .body("{ \"email\": \"eve.holt@reqres.i\", \"password\": \"cityslicka\" }")
+                                    .body("{ \"email\": \"eve.holt@reqres.in\", \"password\": \"cityslicka\" }")
                                     .header("Content-Type", "application/json")
                     )
             ).run();
@@ -84,7 +84,7 @@ public class LoadTest {
             try {
             Assertions.assertEquals(0, stats.overall().errors().total());
         } catch (AssertionError e) {
-                System.out.println(e.getMessage());
+                System.out.println("Error message: " + e.getMessage());
             }
     }
 
